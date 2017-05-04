@@ -7,6 +7,7 @@ import { Switch, Route } from 'react-router-dom';
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import createSagaMiddleware from 'redux-saga';
+import thunk from 'redux-thunk';
 import { fork } from 'redux-saga/effects';
 
 import adminReducer from './reducer';
@@ -53,7 +54,7 @@ const Admin = ({
     const sagaMiddleware = createSagaMiddleware();
     const history = createHistory();
     const store = createStore(reducer, initialState, compose(
-        applyMiddleware(sagaMiddleware, routerMiddleware(history)),
+        applyMiddleware(thunk, sagaMiddleware, routerMiddleware(history)),
         window.devToolsExtension ? window.devToolsExtension() : f => f,
     ));
     sagaMiddleware.run(saga);
